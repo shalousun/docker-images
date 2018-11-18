@@ -1,5 +1,6 @@
 # Build with:
 # docker build -t alpine-bash:3.8 .
+# set timezone Asia/Shanghai
 
 FROM alpine:3.8
 
