@@ -1,0 +1,32 @@
+
+#
+# This config file reads logs for all containers running on this host
+#
+
+filebeat.registry_file: /var/log/filebeat.registry
+
+logging.level: ${LOG_LEVEL:error}
+
+# if you want cloud metadata included in your elastic
+processors:
+- add_cloud_metadata:
+
+fields_under_root: true
+fields:
+  program: filebeat_k8s
+  hostname: ${FILEBEAT_HOST:${HOSTNAME}}
+
+filebeat.prospectors:
+  - input_type: log
+    paths:
+      - /var/log/containers/*.log
+    symlinks: true
+    tail_files: true
+    json.message_key: log
+    json.keys_under_root: true
+    json.add_error_key: true
+    multiline.pattern: '^[[:space:]]'
+    multiline.match: after
+
+output.logstash:
+  hosts: [ "${LOGSTASH_HOST}:${LOGSTASH_PORT}" ]
