@@ -19,4 +19,6 @@ RUN mkdir -p /opt/maven/repository \
     && cp /tmp/maven/settings.xml ${MAVEN_HOME}/conf/settings.xml \
     && rm -rf /tmp/maven
 
+ENV TZ="Asia/Shanghai"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV PATH ${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}

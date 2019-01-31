@@ -4,6 +4,8 @@ ENV MAVEN_VERSION 3.5.3
 ENV JAVA_HOME /usr/local/java/jdk8
 ENV MAVEN_HOME /opt/maven/apache-maven-${MAVEN_VERSION}
 ENV CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+ENV TZ="Asia/Shanghai"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # build java
 COPY ./jdk1.8.0_181 ${JAVA_HOME}
