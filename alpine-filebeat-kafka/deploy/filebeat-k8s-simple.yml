@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: filebeat
-        image: registry.cn-hangzhou.aliyuncs.com/shalousun/filebeat-nossl:5.5
+        image: registry.cn-hangzhou.aliyuncs.com/shalousun/filebeat-kafka:1.0
         imagePullPolicy: Always
         resources:
           limits:
@@ -26,9 +26,9 @@ spec:
             memory: 200Mi
         env:
             - name:  KAFKA_HOSTS
-              value: "logstash.mydomain.com"
+              value: '["172.31.205.22:9092"]'
             - name:  KAFKA_TOPIC
-              value: "5044"
+              value: "k8s-test"
         volumeMounts:
         - name: varlog
           mountPath: /var/log
