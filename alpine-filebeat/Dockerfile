@@ -1,6 +1,6 @@
 FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.8
 
-MAINTAINER shalousun <836575280@qq.com>
+MAINTAINER yusun <836575280@qq.com>
 
 ENV FILEBEAT_VERSION=6.4.2
 

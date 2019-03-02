@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-oraclejre8:slim
 
-MAINTAINER shalousun
+MAINTAINER yusun
 
 #### START OF TIMEZONE RELATED COMMANDS ####
 RUN apk update

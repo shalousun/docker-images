@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 
-MAINTAINER shalousun
+MAINTAINER yusun
 
 #### START OF TIMEZONE RELATED COMMANDS ####
 RUN apk update
