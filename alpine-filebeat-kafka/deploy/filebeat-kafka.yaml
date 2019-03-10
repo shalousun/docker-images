@@ -28,8 +28,9 @@ data:
         json.message_key: log
         json.keys_under_root: true
         json.add_error_key: true
-        multiline.pattern: '^[[:space:]]'
+        multiline.pattern: '^\s*(\d{4}|\d{2})\-(\d{2}|[a-zA-Z]{3})\-(\d{2}|\d{4})'
         multiline.match: after
+        document_type: k8s_kafka
     output.kafka:
       enabled: true
       required_acks: 1
