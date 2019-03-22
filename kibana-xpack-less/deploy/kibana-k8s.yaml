@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
         - name: kibana
-          image: docker.elastic.co/kibana/kibana:6.4.0
+          image: registry.cn-shanghai.aliyuncs.com/shalousun/kibana-xpack-less:5.2.1
           imagePullPolicy: Always
 #          resources:
 #            requests:
@@ -68,10 +68,10 @@ spec:
 #              memory: 100Mi
           env:
               - name:  ELASTICSEARCH_URL
-                value: "http://172.31.205.24:9200"
+                value: "http://192.168.237.128:9200"
           volumeMounts:
           - name: kibana-config
-            mountPath: /usr/share/kibana/config/kibana.yml
+            mountPath: /etc/kibana/kibana.yml
             readOnly: true
             subPath: kibana.yml
           ports:
