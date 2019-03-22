@@ -1,6 +1,8 @@
 # Kubernates filebeat 容器
 一个简单的filebeat容器，用于在k8s中收集日志。该容器镜像默认内置的配置是filebeat往kafka的推送，但是可以通过挂载外部配置文件来往
-其他地方推送。
+其它开源组件推送。建议覆盖容器内部的kafka配置
+
+
 
 # 配置
 两个必须的环境变量配置
@@ -39,7 +41,7 @@ filter {
       rename => { "log" => "message" }
     }
     grok {
-      match => { "source" => "/var/log/containers/%{DATA:k8s_pod}_%{DATA:k8s_namespace}_%{GREEDYDATA:k8s_service}-%{DATA:k8s_container_id}.log" }
+      match => { "source" => "/var/log/containers/%{DATA:pod_name}_%{DATA:namespace}_%{GREEDYDATA:container_name}-%{DATA:container_id}.log" }
       remove_field => ["source"]
     }
   }
