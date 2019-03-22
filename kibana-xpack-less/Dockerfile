@@ -18,8 +18,11 @@ RUN chown -R kibana:kibana /usr/share/kibana
 COPY ./config/kibana.yml /usr/share/kibana/config/kibana.yml
 
 RUN sed -i "s/:\/bin/:\/bin:\/usr\/share\/kibana\/bin/" /etc/profile
-ADD scripts/docker-entrypoint.sh /usr/sbin
+ADD docker-entrypoint.sh /usr/sbin
 EXPOSE 5601
+
+VOLUME [ "/usr/share/kibana" ]
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["kibana"]
 
