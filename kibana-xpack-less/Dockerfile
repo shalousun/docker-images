@@ -21,5 +21,5 @@ RUN apk add --update-cache curl wget bash libc6-compat && \
 COPY ./config/kibana.yml /etc/kibana/kibana.yml
 ADD scripts /usr/local/kibana/
 RUN chown -R root:root /usr/local/kibana-${KIBANA_VERSION}-linux-x86_64 /var/log/kibana /etc/kibana
-ENTRYPOINT ["/usr/local/kibana/kibana.sh"]
+ENTRYPOINT ["sh","/usr/local/kibana/kibana.sh"]
 
