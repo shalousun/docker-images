@@ -8,6 +8,6 @@ fi
 
 # Run as user "kibana" if the command is "kibana"
 if [ "$1" = 'kibana' ]; then
-	set -- su - kibana -s /bin/sh -c kibana -- "$@"
+	set -- su - root -s /bin/sh -c kibana -- "$@"
 fi
 exec "$@"

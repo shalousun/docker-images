@@ -10,9 +10,7 @@ RUN apk --update --no-cache add nodejs wget openssl ca-certificates \
 && rm -rf kibana/node \
 && apk del openssl ca-certificates \
 && rm  -rf /tmp/* /var/cache/apk/*
-RUN addgroup kibana
-RUN adduser  -G kibana -s /bin/false -D kibana
-RUN chown -R kibana:kibana /usr/share/kibana
+RUN chown -R root:root /usr/share/kibana
 RUN sed -i "s/:\/bin/:\/bin:\/usr\/share\/kibana\/bin/" /etc/profile
 ADD docker-entrypoint.sh /usr/sbin
 EXPOSE 5601
