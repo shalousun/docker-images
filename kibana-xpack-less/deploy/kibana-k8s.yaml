@@ -1,0 +1,86 @@
+# Used to collect logs from kubernates pods
+#
+# Example usage: kubectl create -f <this_file>
+
+# ------------------- kibana Config ------------------------------------- #
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: elk
+  labels:
+    k8s-app: kibana
+data:
+  kibana.yml: |-
+    server.port: 5601
+    server.name: kibana
+    server.host: "0"
+    elasticsearch.url: "${ELASTICSEARCH_URL}"
+    xpack.security.enabled: false
+    xpack.monitoring.enabled: false
+    xpack.graph.enabled: false
+    xpack.reporting.enabled: false
+---
+# ------------------- kibana Service ---------------------- #
+apiVersion: v1
+kind: Service
+metadata:
+ name: kibana-svc
+ namespace: elk
+spec:
+ type: NodePort
+ ports:
+ - port: 5601
+   targetPort: 5601
+   #nodePort: 30011
+ selector:
+  app: kibana
+  tier: front
+---
+# ------------------- kibana Deployment ------------------- #
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana-deployment
+  namespace: elk
+spec:
+  selector:
+      matchLabels:
+        app: kibana
+        tier: front
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kibana
+        tier: front
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana:6.4.0
+          imagePullPolicy: Always
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 100Mi
+#            limits:
+#              cpu: 100m
+#              memory: 100Mi
+          env:
+              - name:  ELASTICSEARCH_URL
+                value: "http://172.31.205.24:9200"
+          volumeMounts:
+          - name: kibana-config
+            mountPath: /usr/share/kibana/config/kibana.yml
+            readOnly: true
+            subPath: kibana.yml
+          ports:
+            - containerPort: 5601
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: kibana-config
+        configMap:
+          defaultMode: 0600
+          name: kibana-config
+      imagePullSecrets:
+      - name: harbor-key
