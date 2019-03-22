@@ -53,3 +53,4 @@ output {
   }
 }
 ```
+This grok pattern would add the fields - pod_name, namespace, container_name and container id to log entry in Elasticsearch.
