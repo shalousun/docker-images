@@ -13,17 +13,10 @@ RUN apk --update --no-cache add nodejs wget openssl ca-certificates \
 RUN addgroup kibana
 RUN adduser  -G kibana -s /bin/false -D kibana
 RUN chown -R kibana:kibana /usr/share/kibana
-
-#RUN	/usr/share/kibana/bin/kibana-plugin install x-pack
-COPY ./config/kibana.yml /usr/share/kibana/config/kibana.yml
-
 RUN sed -i "s/:\/bin/:\/bin:\/usr\/share\/kibana\/bin/" /etc/profile
 ADD docker-entrypoint.sh /usr/sbin
 EXPOSE 5601
-
-VOLUME [ "/usr/share/kibana" ]
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["sh","/usr/sbin/docker-entrypoint.sh"]
 CMD ["kibana"]
 
 
