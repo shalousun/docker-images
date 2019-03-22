@@ -6,7 +6,7 @@ ENV KIBANA_VERSION=5.2.1 \
     APP_HOME=/usr/local/kibana
 # Install filebeat
 
-
+RUN apk-install bash nodejs
 RUN apk add --update-cache curl wget bash libc6-compat && \
     rm -rf /var/cache/apk/* && \
     wget -q -O /tmp/kibana.tar.gz https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
