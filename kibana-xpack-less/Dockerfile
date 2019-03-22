@@ -1,2 +1,23 @@
-FROM docker.elastic.co/kibana/kibana:5.2.1
-RUN bin/kibana-plugin remove x-pack
+FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.8
+
+MAINTAINER yusun <836575280@qq.com>
+
+ENV KIBANA_VERSION=5.2.1 \
+    APP_HOME=/usr/local/kibana
+# Install filebeat
+
+
+RUN apk add --update-cache curl wget bash libc6-compat && \
+    rm -rf /var/cache/apk/* && \
+    groupadd -g 405 kibana && \
+    useradd -u 405 -g 405 kibana && \
+    wget -q -O /tmp/kibana.tar.gz https://artifacts.elastic.co/downloads/kibana/kibana-${KIBANA_VERSION}-linux-x86_64.tar.gz && \
+    tar -xzf /tmp/kibana.tar.gz -C /usr/local && \
+    mkdir -p /var/log/kibana /etc/kibana && \
+    rm -rf /tmp/kibana.tar.gz && \
+#RUN	/usr/local/kibana/bin/kibana-plugin install x-pack
+COPY config/kibana.yml /etc/kibana/kibana.yml
+ADD scripts /usr/local/kibana/
+RUN chown -R kibana:kibana /usr/local/kibana-${KIBANA_VERSION}-linux-x86_64 /var/log/kibana /etc/kibana
+ENTRYPOINT ["/usr/local/kibana/kibana.sh"]
+

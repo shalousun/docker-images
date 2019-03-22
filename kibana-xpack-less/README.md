@@ -2,7 +2,7 @@ kibana没有安装xpack插件的镜像.
 
 # 构建镜像
 ```
-docker build -t kibana-xpack-less:5.5.0 .
+docker build -t kibana-xpack-less:5.2.1 .
 ```
 
 # 部署
