@@ -15,7 +15,7 @@ data:
     server.port: 5601
     server.name: kibana
     server.host: "0"
-    elasticsearch.url: ${ELASTICSEARCH_URL}
+    elasticsearch.url: http://192.168.237.128:9200
     xpack.security.enabled: false
     xpack.monitoring.enabled: false
     xpack.graph.enabled: false
@@ -66,9 +66,6 @@ spec:
 #            limits:
 #              cpu: 100m
 #              memory: 100Mi
-          env:
-              - name:  ELASTICSEARCH_URL
-                value: http://192.168.237.128:9200
           volumeMounts:
           - name: kibana-config
             mountPath: /usr/share/kibana/config/kibana.yml
@@ -84,3 +81,19 @@ spec:
           name: kibana-config
       imagePullSecrets:
       - name: harbor-key
+# ------------------- kibana ingress ---------------------- #
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: default
+spec:
+  rules:
+  - host: kibana.com
+    http:
+      #port: 80
+      paths:
+      - path: /
+        backend:
+          serviceName: kibana-svc
+          servicePort: 8080
