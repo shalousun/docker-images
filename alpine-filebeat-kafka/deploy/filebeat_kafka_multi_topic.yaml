@@ -22,7 +22,7 @@ data:
     filebeat.prospectors:
       - input_type: log
         paths:
-          - /var/log/containers/iot*.log
+          - /var/log/containers/*deployment*.log
         fields:
           log_topics: k8s-test
         symlinks: true
@@ -96,7 +96,7 @@ spec:
             memory: 200Mi
         env:
             - name:  KAFKA_HOSTS
-              value: '["172.31.205.22:9092"]'
+              value: '["192.168.237.143:9092"]'
             - name:  KAFKA_TOPIC
               value: "k8s-test"
         volumeMounts:
