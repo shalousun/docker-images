@@ -110,8 +110,6 @@ spec:
         env:
             - name:  KAFKA_HOSTS
               value: '["192.168.237.143:9092"]'
-            - name:  KAFKA_TOPIC
-              value: "k8s-test"
         volumeMounts:
         - name: filebeat-config
           mountPath: /filebeat/filebeat.yml
@@ -171,3 +169,4 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: filebeat
+---
