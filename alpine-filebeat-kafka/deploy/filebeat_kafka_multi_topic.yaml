@@ -45,8 +45,8 @@ data:
               in_cluster: true
               default_matchers.enabled: false
               matchers:
-                - logs_path:
-                    logs_path: /var/log/containers/
+              - logs_path:
+                  logs_path: /var/log/containers/
               namespace: kube-system
         document_type: k8s_kafka
       - input_type: log
@@ -69,8 +69,8 @@ data:
               in_cluster: true
               default_matchers.enabled: false
               matchers:
-                - logs_path:
-                    logs_path: /var/log/containers/
+              - logs_path:
+                  logs_path: /var/log/containers/
               namespace: kube-system
         document_type: k8s_ingress_access
     output.kafka:
