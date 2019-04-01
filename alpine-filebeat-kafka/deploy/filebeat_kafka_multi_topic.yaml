@@ -99,7 +99,7 @@ spec:
       serviceAccountName: filebeat
       containers:
       - name: filebeat
-        image: registry.cn-hangzhou.aliyuncs.com/shalousun/filebeat-kafka:1.0
+        image: registry.cn-hangzhou.aliyuncs.com/shalousun/filebeat-kafka:6.4.2
         imagePullPolicy: IfNotPresent
         resources:
           limits:
