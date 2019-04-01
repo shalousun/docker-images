@@ -24,8 +24,8 @@ data:
     fields:
       program: filebeat_k8s
       hostname: ${FILEBEAT_HOST:${HOSTNAME}}
-    filebeat.prospectors:
-      - input_type: log
+    filebeat.inputs:
+      - type: log
         paths:
           - /var/log/containers/*deployment*.log
         fields:
@@ -49,7 +49,7 @@ data:
                   logs_path: /var/log/containers/
               namespace: kube-system
         document_type: k8s_kafka
-      - input_type: log
+      - type: log
         paths:
           - /var/log/containers/nginx-ingress-controller*.log
         fields:
