@@ -7,7 +7,29 @@ docker build -t kibana-xpack-less:5.2.1 .
 
 # 部署
 ```
+# Used to collect logs from kubernates pods
+#
 # Example usage: kubectl create -f <this_file>
+
+# ------------------- kibana Config ------------------------------------- #
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: default
+  labels:
+    k8s-app: kibana
+data:
+  kibana.yml: |-
+    server.port: 5601
+    server.name: kibana
+    server.host: "0"
+    elasticsearch.url: http://172.31.205.24:9200
+    xpack.security.enabled: false
+    xpack.monitoring.enabled: false
+    xpack.graph.enabled: false
+    xpack.reporting.enabled: false
+---
 # ------------------- kibana Service ---------------------- #
 apiVersion: v1
 kind: Service
@@ -19,7 +41,7 @@ spec:
  ports:
  - port: 5601
    targetPort: 5601
-   #nodePort: 30011
+   nodePort: 32601
  selector:
   app: kibana
   tier: front
@@ -28,7 +50,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kibana-deployment
+  name: kibana-dep
   namespace: default
 spec:
   selector:
@@ -44,8 +66,8 @@ spec:
     spec:
       containers:
         - name: kibana
-          image: docker.elastic.co/kibana/kibana:6.4.0
-          imagePullPolicy: Always
+          image: registry.cn-shanghai.aliyuncs.com/shalousun/kibana-xpack-less:5.2.1
+          imagePullPolicy: IfNotPresent
 #          resources:
 #            requests:
 #              cpu: 100m
@@ -53,11 +75,19 @@ spec:
 #            limits:
 #              cpu: 100m
 #              memory: 100Mi
-          env:
-              - name:  ELASTICSEARCH_URL
-                value: "http://172.31.205.24:9200"
+          volumeMounts:
+          - name: kibana-config
+            mountPath: /usr/share/kibana/config/kibana.yml
+            readOnly: true
+            subPath: kibana.yml
           ports:
             - containerPort: 5601
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: kibana-config
+        configMap:
+          defaultMode: 0600
+          name: kibana-config
       imagePullSecrets:
       - name: harbor-key
 ---
@@ -76,5 +106,5 @@ spec:
       - path: /
         backend:
           serviceName: kibana-svc
-          servicePort: 5601
+          servicePort: 8080
 ```
