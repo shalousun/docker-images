@@ -2,7 +2,7 @@ FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.8
 
 MAINTAINER yusun <836575280@qq.com>
 
-ENV KIBANA_VER=6.4.2
+ENV KIBANA_VER=5.2.1
 RUN apk --update --no-cache add nodejs wget openssl ca-certificates \
 && cd /usr/share \
 && wget https://artifacts.elastic.co/downloads/kibana/kibana-$KIBANA_VER-linux-x86_64.tar.gz -O - | tar xvfz - \
