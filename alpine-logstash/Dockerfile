@@ -55,5 +55,5 @@ COPY logstash-entrypoint.sh /
 
 EXPOSE 9600 5044
 
-ENTRYPOINT ["/logstash-entrypoint.sh"]
+ENTRYPOINT ["sh","/logstash-entrypoint.sh"]
 CMD ["-e", ""]
