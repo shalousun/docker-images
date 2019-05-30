@@ -55,4 +55,4 @@ COPY logstash-entrypoint.sh /
 
 EXPOSE 9600 5044
 
-ENTRYPOINT ["sh","-c","logstash -f /usr/share/logstash/pipeline/logstash.conf"]
+ENTRYPOINT ["sh","-c","/usr/share/logstash/bin/logstash -f /usr/share/logstash/pipeline/logstash.conf"]
