@@ -52,7 +52,8 @@ VOLUME ["/etc/logstash/conf.d"]
 COPY config/logstash /usr/share/logstash/config/
 COPY config/pipeline/default.conf /usr/share/logstash/pipeline/logstash.conf
 COPY logstash-entrypoint.sh /
-
+RUN chmod +x /docker-entrypoint.sh
 EXPOSE 9600 5044
 
-ENTRYPOINT ["sh","-c","/usr/share/logstash/bin/logstash -f /usr/share/logstash/pipeline/logstash.conf"]
+ENTRYPOINT ["/logstash-entrypoint.sh"]
+CMD ["-f", "/usr/share/logstash/pipeline/logstash.conf"]
