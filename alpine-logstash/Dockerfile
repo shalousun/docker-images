@@ -56,4 +56,4 @@ RUN chmod +x /logstash-entrypoint.sh
 EXPOSE 9600 5044
 
 ENTRYPOINT ["/logstash-entrypoint.sh"]
-CMD ["-f", "/usr/share/logstash/pipeline/logstash.conf"]
+CMD ["-e", ""]

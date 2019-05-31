@@ -15,5 +15,5 @@ if [ "$1" = 'logstash' ]; then
 
 	set -- su-exec logstash "$@"
 fi
-
+echo "$@" >> me.log
 exec "$@"
