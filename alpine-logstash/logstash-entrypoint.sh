@@ -9,11 +9,12 @@ fi
 
 # Run as user "logstash" if the command is "logstash"
 if [ "$1" = 'logstash' ]; then
-	chown -R logstash: /usr/share/logstash
-	chown -R logstash: /etc/logstash/conf.d/
+    echo "command logstash" >> me.log
+	# chown -R logstash: /usr/share/logstash
+	# chown -R logstash: /etc/logstash/conf.d/
 	# chown -R logstash: /opt/logstash/patterns
 
-	set -- su-exec logstash "$@"
+	set -- su-exec root "$@"
 fi
 echo "$@" >> me.log
 exec "$@"
