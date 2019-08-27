@@ -65,11 +65,11 @@ env:
 volumes:
 - name: perflog
   hostPath:
-      path: /data/MyPerf4J/log
+      path: /data/MyPerf4J/log # 宿主机挂载点
 ```
 添加volume
 ```
 volumeMounts:
 - name: perflog
-  mountPath: /MyPerf4J/log
+  mountPath: /MyPerf4J/log # 容器内挂载点
 ```
