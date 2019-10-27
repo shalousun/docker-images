@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:2.89.3
 
-ENV MAVEN_VERSION 3.5.3
+ENV MAVEN_VERSION 3.6.2
 ENV JAVA_HOME /usr/local/java/jdk8
 ENV MAVEN_HOME /opt/maven/apache-maven-${MAVEN_VERSION}
 ENV CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar

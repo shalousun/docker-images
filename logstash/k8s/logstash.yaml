@@ -6,8 +6,10 @@ metadata:
 data:
   logstash.conf: |-
     input {
-      tcp {
-        port => 5044
+      kafka {
+        bootstrap_servers => "172.31.205.22:9092"
+        topics => ["k8s-test"]
+        type => "kafka-input"
         codec => "json"
       }
     }
