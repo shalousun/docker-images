@@ -1,0 +1,20 @@
+version: '3'
+services:
+  elasticsearch-single:
+    image: registry.cn-hangzhou.aliyuncs.com/elk-stack/elasticsearch:7.6.0
+    container_name: elasticsearch-single
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - esnet
+networks:
+  esnet:
