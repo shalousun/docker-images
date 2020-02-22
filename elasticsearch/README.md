@@ -1,0 +1,1 @@
+es镜像已经集成了opendistro_sql
