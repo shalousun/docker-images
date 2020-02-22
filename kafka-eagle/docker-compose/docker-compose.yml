@@ -1,0 +1,12 @@
+version: '2'
+services:
+  kafka-eagle:
+    container_name: kafka-eagle
+    image: xuxiangwork/kafka-eagle
+    ports:
+      - "8048:8048"
+    environment:
+      KAFKA_ZOOKEEPER_HOSTS: <IP:PORT>
+      DB_HOST: <IP:PORT>
+      DB_USER: <USER>
+      DB_PASSWORD: <PASSWORD>
