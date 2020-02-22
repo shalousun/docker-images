@@ -1,12 +1,10 @@
-FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.8
+FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.9
 
 MAINTAINER yusun <836575280@qq.com>
 
-ENV FILEBEAT_VERSION=6.4.2
+ENV FILEBEAT_VERSION=7.4.2
 
 # Install filebeat
-
-COPY ./config/filebeat.yml /
 
 RUN apk add --update-cache curl bash libc6-compat && \
     rm -rf /var/cache/apk/* && \
@@ -16,8 +14,6 @@ RUN apk add --update-cache curl bash libc6-compat && \
     mv filebeat-${FILEBEAT_VERSION}-linux-x86_64 filebeat && \
     cd filebeat && \
     cp filebeat /usr/bin && \
-    rm -rf /filebeat/filebeat.yml && \
-    cp /filebeat.yml /filebeat/ && \
     ls -ltr /filebeat && \
     cat /filebeat/filebeat.yml
 

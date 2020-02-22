@@ -16,8 +16,8 @@ fields:
   program: filebeat_k8s
   hostname: ${FILEBEAT_HOST:${HOSTNAME}}
 
-filebeat.prospectors:
-  - input_type: log
+filebeat.inputs:
+  - type: log
     paths:
       - /var/log/containers/*.log
     symlinks: true
@@ -28,5 +28,5 @@ filebeat.prospectors:
     multiline.pattern: '^[[:space:]]'
     multiline.match: after
 
-output.logstash:
-  hosts: [ "${LOGSTASH_HOST}:${LOGSTASH_PORT}" ]
+#output.logstash:
+  #hosts: [ "${LOGSTASH_HOST}:${LOGSTASH_PORT}" ]
