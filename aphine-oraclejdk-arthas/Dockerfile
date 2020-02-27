@@ -13,9 +13,7 @@ RUN echo "http://mirrors.aliyun.com/alpine/v3.10/main" > /etc/apk/repositories &
     apk add --no-cache procps curl bash busybox-extras tzdata iproute2 && \
     ln -s "java-${JAVA_VERSION}-oracle" "$JAVA_HOME" && \
     ln -s "$JAVA_HOME/bin/"* "/usr/bin/" &&\
-    echo 'public class Main { public static void main(String[] args) { System.out.println("Java code is running fine!"); } }' > Main.java && \
-    javac Main.java && \
-    java Main
+    java -version
 
 #sed -i -e 's/^root::/root:!:/' /etc/shadow
 ENV TZ="Asia/Shanghai"
