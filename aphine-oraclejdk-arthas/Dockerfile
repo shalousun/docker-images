@@ -11,7 +11,7 @@ RUN echo "http://mirrors.aliyun.com/alpine/v3.10/main" > /etc/apk/repositories &
     echo "http://mirrors.aliyun.com/alpine/v3.10/community" >> /etc/apk/repositories  && \
     apk update upgrade && \
     apk add --no-cache procps curl bash busybox-extras tzdata iproute2 && \
-    ln -s "java-${JAVA_VERSION}-oracle" "$JAVA_HOME" && \
+    ln -s "/usr/lib/jvm/java-8-oracle" "$JAVA_HOME" && \
     ln -s "$JAVA_HOME/bin/"* "/usr/bin/" &&\
     java -version
 
