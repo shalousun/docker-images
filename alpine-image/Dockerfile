@@ -2,7 +2,7 @@
 # docker build -t alpine-bash:3.11 .
 # set timezone Asia/Shanghai
 
-FROM alpine:3.11
+FROM alpine:3.9
 ENV TZ="Asia/Shanghai"
 
 RUN \
