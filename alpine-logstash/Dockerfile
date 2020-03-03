@@ -1,14 +1,14 @@
-FROM registry.cn-shanghai.aliyuncs.com/shalousun/aphine-oraclejdk-arthas:1.0.0
+FROM alpine:3.10
 
 LABEL maintainer "836575280@qq.com"
 
-RUN apk add --no-cache su-exec
+RUN apk add --no-cache openjdk8-jre su-exec
 
-ENV VERSION 7.4.2
+ENV VERSION 7.1.1
 ENV DOWNLOAD_URL https://artifacts.elastic.co/downloads/logstash
-ENV TARBALL "${DOWNLOAD_URL}/logstash-${VERSION}.tar.gz"
-ENV TARBALL_ASC "${DOWNLOAD_URL}/logstash-${VERSION}.tar.gz.asc"
-ENV TARBALL_SHA "39bab1b9b0c9f0006c2ad7aa152b3863179030352202ec0c4c4a887bdeb98d4c34127699655cfc7c5b9f44119b45de9629bfacc670d520dcf266b3298fdf2484"
+ENV TARBALL "${DOWNLOAD_URL}/logstash-oss-${VERSION}.tar.gz"
+ENV TARBALL_ASC "${DOWNLOAD_URL}/logstash-oss-${VERSION}.tar.gz.asc"
+ENV TARBALL_SHA "9a855cf8f945702f0ee9852673e4470e5f3a5b5a4f576f9913b4c46118e24e36ce4974b6f50fd7a2ee4d76c42d33ad5df747c30f00b33862e0149a178ac4b833"
 ENV GPG_KEY "46095ACC8548582C1A2699A9D27D666CD88E42B4"
 
 RUN apk add --no-cache libzmq bash
@@ -31,6 +31,7 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   fi; \
   tar -xzf logstash.tar.gz \
   && mv logstash-$VERSION /usr/share/logstash \
+  && adduser -DH -s /sbin/nologin logstash \
   && rm -rf /tmp/* \
   && apk del --purge .build-deps
 
