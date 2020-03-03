@@ -1,0 +1,183 @@
+# Used to collect logs from kubernates pods
+#
+# Example usage: kubectl create -f <this_file>
+
+# ------------------- filebeat Config ------------------------------------- #
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: kube-system
+  labels:
+    k8s-app: filebeat
+data:
+  filebeat.yml: |-
+    filebeat.registry_file: /var/log/filebeat.registry
+    processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+          default_matchers.enabled: false
+          matchers:
+          - logs_path:
+              logs_path: /var/log/containers/
+    fields_under_root: true
+    fields:
+      program: filebeat_k8s
+    filebeat.inputs:
+      - type: log
+        paths:
+          - /var/log/secure
+        fields:
+          log_topics: system_log
+      - type: log
+        paths:
+          - /var/log/containers/*deployment*.log
+        fields:
+          log_topics: k8s_app
+        symlinks: true
+        tail_files: true
+        json.message_key: log
+        json.keys_under_root: true
+        json.add_error_key: true
+        max_lines: 1000
+        negate: true
+        multiline.negate: true
+        multiline.pattern: '^\s*(\d{4}|\d{2})\-(\d{2}|[a-zA-Z]{3})\-(\d{2}|\d{4})'
+        multiline.match: after
+        processors:
+          - decode_json_fields:
+              fields: ['log']
+              target: json
+          - add_kubernetes_metadata:
+              in_cluster: true
+              default_matchers.enabled: false
+              matchers:
+              - logs_path:
+                  logs_path: /var/log/containers/
+              namespace: kube-system
+        document_type: k8s_kafka
+      - type: log
+        paths:
+          - /var/log/containers/nginx-ingress-controller*.log
+        fields:
+          log_topics: k8s_ingress_access
+        symlinks: true
+        tail_files: true
+        json.message_key: log
+        json.keys_under_root: true
+        json.add_error_key: true
+        max_lines: 1000
+        negate: true
+        multiline.negate: true
+        multiline.pattern: '^{'
+        multiline.match: after
+        processors:
+          - add_kubernetes_metadata:
+              in_cluster: true
+              default_matchers.enabled: false
+              matchers:
+              - logs_path:
+                  logs_path: /var/log/containers/
+              namespace: kube-system
+        document_type: k8s_ingress_access
+    output.kafka:
+      enabled: true
+      required_acks: 1
+      hosts: ${KAFKA_HOSTS}
+      topic: '%{[fields][log_topics]}'
+---
+# ------------------- filebeat DaemonSet ---------------------- #
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  namespace: kube-system
+  labels:
+    app: filebeat
+    k8s-app: filebeat
+    kubernetes.io/cluster-service: "true"
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: filebeat
+        kubernetes.io/cluster-service: "true"
+    spec:
+      serviceAccountName: filebeat
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        effect: "NoSchedule"
+      containers:
+      - name: filebeat
+        image: registry.cn-hangzhou.aliyuncs.com/elk-stack/alpine-filebeat:7.4.2
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 700Mi
+          requests:
+            cpu: 100m
+            memory: 700Mi
+        env:
+            - name:  KAFKA_HOSTS
+              value: '["kafka1:9020","kafka12:9020"]'
+        volumeMounts:
+        - name: filebeat-config
+          mountPath: /filebeat/filebeat.yml
+          readOnly: true
+          subPath: filebeat.yml
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /data/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: filebeat-config
+        configMap:
+          defaultMode: 0600
+          name: filebeat-config
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /data/docker/containers
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+subjects:
+- kind: ServiceAccount
+  name: filebeat
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: filebeat
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: filebeat
+  labels:
+    k8s-app: filebeat
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources:
+  - namespaces
+  - pods
+  verbs:
+  - get
+  - watch
+  - list
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: kube-system
+  labels:
+    k8s-app: filebeat
+---
+
