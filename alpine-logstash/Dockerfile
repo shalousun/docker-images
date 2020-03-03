@@ -1,10 +1,10 @@
-FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.9
+FROM registry.cn-shanghai.aliyuncs.com/shalousun/aphine-oraclejdk-arthas:1.0.0
 
 LABEL maintainer "836575280@qq.com"
 
-RUN apk add --no-cache openjdk8-jre su-exec
+RUN apk add --no-cache su-exec
 
-ENV VERSION 6.4.3
+ENV VERSION 7.4.2
 ENV DOWNLOAD_URL https://artifacts.elastic.co/downloads/logstash
 ENV TARBALL "${DOWNLOAD_URL}/logstash-${VERSION}.tar.gz"
 ENV TARBALL_ASC "${DOWNLOAD_URL}/logstash-${VERSION}.tar.gz.asc"
