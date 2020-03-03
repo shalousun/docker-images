@@ -4,7 +4,7 @@ LABEL maintainer "836575280@qq.com"
 
 RUN apk add --no-cache openjdk8-jre su-exec
 
-ENV VERSION 7.1.1
+ENV VERSION 7.4.2
 ENV DOWNLOAD_URL https://artifacts.elastic.co/downloads/logstash
 ENV TARBALL "${DOWNLOAD_URL}/logstash-oss-${VERSION}.tar.gz"
 ENV TARBALL_ASC "${DOWNLOAD_URL}/logstash-oss-${VERSION}.tar.gz.asc"
