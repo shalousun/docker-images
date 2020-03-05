@@ -12,7 +12,6 @@ metadata:
     k8s-app: filebeat
 data:
   filebeat.yml: |-
-    filebeat.registry_file: /var/log/filebeat.registry
     processors:
       - add_kubernetes_metadata:
           in_cluster: true
