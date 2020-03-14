@@ -1,4 +1,4 @@
-kibana没有安装xpack插件的镜像.
+kibana没有安装xpack插件的镜像. 可以使用`blacktop/kibana:7.4.2`镜像进行构建。
 
 # 构建镜像
 ```
@@ -47,16 +47,16 @@ spec:
   tier: front
 ---
 # ------------------- kibana Deployment ------------------- #
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kibana-dep
   namespace: default
 spec:
   selector:
-      matchLabels:
-        app: kibana
-        tier: front
+    matchLabels:
+      app: kibana
+      tier: front
   replicas: 1
   template:
     metadata:
