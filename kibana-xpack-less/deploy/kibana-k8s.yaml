@@ -38,16 +38,16 @@ spec:
   tier: front
 ---
 # ------------------- kibana Deployment ------------------- #
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kibana-dep
   namespace: default
 spec:
   selector:
-      matchLabels:
-        app: kibana
-        tier: front
+    matchLabels:
+      app: kibana
+      tier: front
   replicas: 1
   template:
     metadata:

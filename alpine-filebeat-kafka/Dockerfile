@@ -1,8 +1,8 @@
-FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.8
+FROM registry.cn-hangzhou.aliyuncs.com/shalousun/alpine-zh:3.9
 
 MAINTAINER yusun <836575280@qq.com>
 
-ENV FILEBEAT_VERSION=6.6.2
+ENV FILEBEAT_VERSION=7.4.2
 
 # Install filebeat
 

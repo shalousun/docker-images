@@ -2,7 +2,7 @@
 
 # 镜像
 ```
-docker pull registry.cn-shanghai.aliyuncs.com/shalousun/alpine-openjdk8-perf4j:1.0.0
+docker pull registry.cn-shanghai.aliyuncs.com/shalousun/alpine-openjdk8-perf4j:1.0.1
 ```
 # k8s jvm监控
 首先java应用需要使用该镜像作为应用的基础镜像。部署操作如下：

@@ -37,7 +37,7 @@ data:
       hosts: [ "${LOGSTASH_HOST}:${LOGSTASH_PORT}" ]
 ---
 # ------------------- SpringBoot Application Service ---------------------- #
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: filebeat
@@ -47,10 +47,13 @@ metadata:
     k8s-app: filebeat
     kubernetes.io/cluster-service: "true"
 spec:
+  selector:
+    matchLabels:
+      name: filebeat
   template:
     metadata:
       labels:
-        k8s-app: filebeat
+        name: filebeat
         kubernetes.io/cluster-service: "true"
     spec:
       containers:
