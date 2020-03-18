@@ -2,6 +2,8 @@ FROM jenkinsci/jnlp-slave:3.35-2-alpine
 
 MAINTAINER 836575280@qq.com
 
+ARG user=jenkins
+
 USER root
 
 LABEL Description="This is a extend image base from jenkins/jnlp-slave which install maven in it."
@@ -22,3 +24,7 @@ COPY conf/* $MAVEN_HOME/conf
 
 ENV TZ="Asia/Shanghai"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+USER ${user}
+
+ENTRYPOINT ["jenkins-slave"]
