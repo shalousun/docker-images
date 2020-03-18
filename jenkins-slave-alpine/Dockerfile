@@ -12,7 +12,7 @@ ENV MAVEN_HOME=/usr/local/maven
 ENV PATH ${MAVEN_HOME}/bin:${PATH}
 
 RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories && \
-    echo "http://mirrors.aliyun.com/alpine/v3.19/community" >> /etc/apk/repositories  && \
+    echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories  && \
     apk update upgrade && \
     apk add --no-cache procps curl bash busybox-extras tzdata iproute2 && \
     wget https://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
