@@ -15,7 +15,7 @@ ENV PATH ${MAVEN_HOME}/bin:${PATH}
 RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories  && \
     apk update upgrade && \
-    apk add --no-cache procps curl bash busybox-extras tzdata iproute2 docker && \
+    apk add --no-cache procps shadow curl bash busybox-extras tzdata iproute2 docker && \
     wget https://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
     tar -xzvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
     mv apache-maven-$MAVEN_VERSION ${MAVEN_HOME} && \
@@ -24,7 +24,8 @@ RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories &&
     tar -xzvf kubernetes-client-linux-amd64.tar.gz && \
     cp kubernetes/client/bin/kubectl /usr/local/bin/ && \
     chmod +x /usr/local/bin/kubectl && \
-    rm -rf kubernetes
+    rm -rf kubernetes && \
+    sudo usermod -aG docker ${user}
 
 COPY conf/* $MAVEN_HOME/conf
 
