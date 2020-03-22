@@ -32,6 +32,6 @@ COPY conf/* $MAVEN_HOME/conf
 ENV TZ="Asia/Shanghai"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-USER ${user}
+#USER ${user}
 
 ENTRYPOINT ["jenkins-slave"]
