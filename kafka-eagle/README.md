@@ -26,7 +26,16 @@ services:
     ports:
       - "8048:8048"
 ```
-
+## Start use kubernetes
+create configmap
+```
+kubectl create configmap kafka-eagle-config -n default --from-file=log4j.properties \
+--from-file=system-config.properties
+```
+deploy
+```
+kubectl deploy -f kafka-eagle.yaml
+```
 ### Using custom Docker images
 
 ```

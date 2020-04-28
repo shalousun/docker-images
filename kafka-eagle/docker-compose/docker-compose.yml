@@ -5,8 +5,10 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
     ports:
       - "8048:8048"
-    environment:
-      KAFKA_ZOOKEEPER_HOSTS: <IP:PORT>
-      DB_HOST: <IP:PORT>
-      DB_USER: <USER>
-      DB_PASSWORD: <PASSWORD>
+    volumes:
+      - ./system-config.properties:/opt/kafka-eagle/conf/system-config.properties
+      - ./log4j.properties:/opt/kafka-eagle/conf/log4j.properties
+    networks:
+      - eaglenet
+networks:
+  eaglenet:
