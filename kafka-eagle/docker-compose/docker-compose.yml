@@ -2,7 +2,7 @@ version: '3'
 services:
   kafka-eagle:
     container_name: kafka-eagle
-    image: registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.4
+    image: registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
     ports:
       - "8048:8048"
     environment:

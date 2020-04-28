@@ -2,7 +2,7 @@ FROM registry.cn-shanghai.aliyuncs.com/shalousun/aphine-oraclejdk-arthas:1.0.0
 
 MAINTAINER shalousun
 
-ENV version=1.4.4
+ENV version=1.4.6
 ENV KE_HOME=/opt/kafka-eagle
 RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories  && \

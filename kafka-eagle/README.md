@@ -3,16 +3,16 @@
 
 ### Pulling the image
 
-```sh
-docker pull registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.4
+```
+docker pull registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
 ```
 
 ### Start
 
-```sh
+```
 sudo docker run --name kafka-eagle --net host \
 -v /conf/system-config.properties:/app/kafka-eagle/conf/system-config.properties \
-registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.4
+registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
 ```
 
 ### Start use docker-compose
@@ -22,15 +22,15 @@ version: '3'
 services:
   kafka-eagle:
     container_name: kafka-eagle
-    image: registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.4
+    image: registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
     ports:
       - "8048:8048"
 ```
 
 ### Using custom Docker images
 
-```sh
-FROM registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.4
+```
+FROM registry.cn-hangzhou.aliyuncs.com/shalousun/kafka-eagle:1.4.6
 COPY log4j.properties /app/kafka-eagle/conf
 COPY system-config.properties /app/kafka-eagle/conf
 ```
