@@ -1,0 +1,81 @@
+# docker images is form solsson/kafka-eagle
+---
+# ------------------- kafka-eagle Deployment ------------------- #
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-eagle-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: kafka-eagle
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-eagle
+        tier: backend
+    spec:
+      nodeSelector:
+        web-admin: "true"
+      containers:
+        - name: kafka-eagle
+          image: 172.16.130.13/library/kafka-eagle:latest
+          imagePullPolicy: Always
+          env:
+            - name:  ZK_HOSTS
+              value: '10.236.64.37:2181'
+            - name: APPLICATION_SECRET
+              value: letmein
+          ports:
+            - containerPort: 8048
+          volumeMounts:
+          - mountPath: /opt/kafka-eagle/conf
+            name: conf
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8048
+              scheme: HTTP
+            initialDelaySeconds: 45
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: 8048
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 256
+          name: kafka-eagle-config
+          optional: false
+        name: conf
+      imagePullSecrets:
+      - name: harbor-key
+---
+# ------------------- kafka-eagle Service ---------------------- #
+apiVersion: v1
+kind: Service
+metadata:
+ name: kafka-eagle-svc
+ namespace: default
+spec:
+ type: NodePort
+ ports:
+ - port: 8048
+   targetPort: 8048
+   nodePort: 32606
+ selector:
+  app: kafka-eagle
+  tier: backend
+---
