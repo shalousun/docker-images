@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.6.1
 
 MAINTAINER shalousun <836575280@qq.com>
 
