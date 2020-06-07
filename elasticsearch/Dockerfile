@@ -2,7 +2,7 @@ FROM docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 
 MAINTAINER shalousun <836575280@qq.com>
 
-ENV CURRENT_VERSION=1.8.0.0
+ENV CURRENT_VERSION=1.6.0.0
 
 RUN yum -y install wget && \
     wget -P /usr/share/ https://d3g5vo6xdbdb9a.cloudfront.net/downloads/elasticsearch-plugins/opendistro-sql/opendistro_sql-${CURRENT_VERSION}.zip && \
