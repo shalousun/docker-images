@@ -4,7 +4,7 @@ LABEL maintainer="hireus@secureimages.dev"
 
 ARG LOGSTASH_VERSION=7.4.2
 ARG TARBALL_ASC="https://artifacts.elastic.co/downloads/logstash/logstash-oss-${LOGSTASH_VERSION}.tar.gz.asc"
-### https://artifacts.elastic.co/downloads/logstash/logstash-oss-7.5.1.tar.gz.sha512
+### https://artifacts.elastic.co/downloads/logstash/logstash-oss-${LOGSTASH_VERSION}.tar.gz.sha512
 ARG TARBALL_SHA="db1ff3a13df9c5873fd08aadbe2c6cb23e9697653a18d054da774ba8448d6654cf0b41cc05db0a0788d75e325569965c8478fa91864694827daa82fc30c1a279"
 ARG GPG_KEY="46095ACC8548582C1A2699A9D27D666CD88E42B4"
 
