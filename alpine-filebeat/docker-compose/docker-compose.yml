@@ -1,7 +1,7 @@
 version: '3'
 services:
   filebeat:
-    image: registry.cn-hangzhou.aliyuncs.com/elk-stack/alpine-filebeat:7.4.2
+    image: registry.cn-hangzhou.aliyuncs.com/elk-stack/alpine-filebeat:7.6.2
     container_name: filebeat
     environment:
       - ELASTICSEARCH_URL=http://172.31.131.9:9200
