@@ -113,7 +113,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: filebeat
-        image: registry.cn-hangzhou.aliyuncs.com/elk-stack/alpine-filebeat:7.4.2
+        image: registry.cn-hangzhou.aliyuncs.com/elk-stack/alpine-filebeat:7.6.2
         imagePullPolicy: IfNotPresent
         resources:
           limits:
