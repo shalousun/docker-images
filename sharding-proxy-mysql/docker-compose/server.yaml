@@ -1,0 +1,7 @@
+authentication:
+  users:
+    root:
+      password: root
+    sharding:
+      authorizedSchemas: iot_smarthome_platform
+      password: root

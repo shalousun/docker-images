@@ -1,0 +1,19 @@
+schemaName: iot_smarthome_platform
+dataSources:
+  ds:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    password: Znjj@Box2017
+    url: jdbc:mysql://localhost:3306/iot_smarthome_platform?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+shardingRule:
+  tables:
+    t_report_device_info:
+      actualDataNodes: ds.t_report_device_info_$->{0..15}
+      tableStrategy:
+        standard:
+          shardingColumn: ctei
+          preciseAlgorithmClassName: com.sharding.algorithm.CommonPreciseShardingAlgorithm
+
