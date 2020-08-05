@@ -2,8 +2,10 @@ FROM frolvlad/alpine-java
 
 MAINTAINER shalousun
 
-# copy arthas
+# Add arthas performance-monitoring
 COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
+# Add MyPerf4J performance-monitoring
+COPY ./MyPerf4J /MyPerf4J
 #### START OF TIMEZONE RELATED COMMANDS ####
 RUN apk update
 RUN apk add --upgrade musl

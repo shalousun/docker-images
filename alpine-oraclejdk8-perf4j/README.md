@@ -57,7 +57,7 @@ volumeMounts:
 ```
 env:
   - name: JAVA_OPTS
-    value: -javaagent:/MyPerf4J/MyPerf4J-ASM-2.7.0.jar -DMyPerf4JPropFile=/MyPerf4J/MyPerf4J.properties -server -Xmx2g -Xms2g -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -Djava.awt.headless=true
+    value: -javaagent:/MyPerf4J/MyPerf4J-ASM-2.10.1.jar -DMyPerf4JPropFile=/MyPerf4J/MyPerf4J.properties -server -Xmx2g -Xms2g -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -Djava.awt.headless=true
 ```
 ## 挂载MyPerf4J日志到本机
 可以将MyPerf4J的性能分析日志挂载到宿主机。
