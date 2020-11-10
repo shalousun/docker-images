@@ -73,3 +73,16 @@ volumeMounts:
 - name: perflog
   mountPath: /MyPerf4J/log # 容器内挂载点
 ```
+
+# 进入本基础容器的命令
+```
+kubectl exec -it xxx /bin/sh
+```
+在openjdk-alpine中启动arthas需要修改应用dockerfile的启动命令
+```
+COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
+#CMD ["/your/program", "-and", "-its", "arguments"]
+CMD ["java","-jar","/home/ci/ci-user-web.jar"]
+```
