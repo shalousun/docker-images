@@ -1,0 +1,77 @@
+# Copyright 2017 ApplicationPower.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Configuration to deploy release version of the springboot application compatible with
+# Kubernetes 1.8.
+#
+# Example usage: kubectl create -f <this_file>
+# ------------------- SpringBoot Application Service ---------------------- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: soul-admin-svc
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30015
+  selector:
+    app: soul-admin
+    tier: backend
+---
+# ------------------- SpringBoot Application Deployment ------------------- #
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soul-admin-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: soul-admin
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: soul-admin
+        tier: backend
+    spec:
+      containers:
+        - name: soul-admin
+          image: docker-server.com/library/com.sunyu.k8s/soul-admin:1.0
+          imagePullPolicy: Always
+          env:
+            # from configmap
+            - name: MYSQL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_URL
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: harbor-key
+---
