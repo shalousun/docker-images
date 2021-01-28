@@ -60,11 +60,11 @@ spec:
                 configMapKeyRef:
                   name: mysql-configmap
                   key: MYSQL_URL
-            - name: MYSQL_USER
+            - name: MYSQL_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: MYSQL_USER
+                  key: MYSQL_USERNAME
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
