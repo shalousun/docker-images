@@ -1,0 +1,1 @@
+Spring Boot的spring-boot-maven-plugin插件构建docker分层镜像的基础插件
